@@ -68,30 +68,42 @@
         var container = document.getElementById('resultado');
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            var number = parseInt(document.getElementById('number').value);
-            var decision = esPrimoFunc(number);
-            if (decision) {
-                var resultado = document.createElement('p');
-                resultado.innerText = 'El número ' + number + ' ES PRIMO';
-                container.appendChild(resultado);
-            } else {
-                var resultado = document.createElement('p');
-                resultado.innerText = 'El número ' + number + ' NO ES PRIMO';
-                container.appendChild(resultado);
-            }
-            setTimeout(() => {
-                container.removeChild(resultado);
-            }, 4000)
-        });
-
-        function esPrimoFunc(num) {
-            var esPrimo;
-            for (var i = 2; i < num; i++) {
-                if (num % i === 0) {
-                    return esPrimo = false;
+            var number = document.getElementById('number').value;
+            var sum = 0;
+            var factor = 2;
+            var reverse_number = reverse_a_number(number).split("");
+            for (var i = 0; i < reverse_number.length; i++) {
+                if (factor > 7) {
+                    factor = 2;
                 }
+                sum = sum + (reverse_number[i] * factor);
+                factor++;
+                // sum = sum + (reverse_number[i] * Math.pow(2, factor));
+                // factor++;
             }
-            return esPrimo = true;
+            console.log(sum);
+            var num_without_module = Math.trunc(sum / 11);
+            var sustraendo = num_without_module * 11;
+            var resta = sum - sustraendo;
+            var digito = 11 - resta;
+            var digito_verificador;
+
+            switch (digito) {
+                case 11:
+                    digito_verificador = 0;
+                    break;
+                case 10:
+                    digito_verificador = 'K';
+                default:
+                    digito_verificador = digito;
+            }
+
+            var resultado = document.createElement('p');
+            resultado.innerText = 'El dígito verificador del RUT ' + number + ' es ' + digito_verificador;
+            container.appendChild(resultado);
+        });
+        function reverse_a_number(num) {
+            return num.split("").reverse().join("");
         }
     </script>
 
