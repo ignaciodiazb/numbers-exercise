@@ -68,30 +68,22 @@
         var container = document.getElementById('resultado');
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            var number = parseInt(document.getElementById('number').value);
-            var decision = esPrimoFunc(number);
-            if (decision) {
-                var resultado = document.createElement('p');
-                resultado.innerText = 'El número ' + number + ' ES PRIMO';
-                container.appendChild(resultado);
-            } else {
-                var resultado = document.createElement('p');
-                resultado.innerText = 'El número ' + number + ' NO ES PRIMO';
-                container.appendChild(resultado);
+            var number = document.getElementById('number').value;
+            sum = 0;
+            factor = 0;
+            var reverse_number = reverse_a_number(number).split("");
+            
+            for (var i = 0; i < reverse_number.length; i++) {
+                sum = sum + (reverse_number[i] * Math.pow(2, factor));
+                factor++; 
             }
-            setTimeout(() => {
-                container.removeChild(resultado);
-            }, 4000)
+            
+            var resultado = document.createElement('p');
+            resultado.innerText = 'El número binario '+ number + ' es equivalente a ' + sum + ' en notación decimal.';
+            container.appendChild(resultado);
         });
-
-        function esPrimoFunc(num) {
-            var esPrimo;
-            for (var i = 2; i < num; i++) {
-                if (num % i === 0) {
-                    return esPrimo = false;
-                }
-            }
-            return esPrimo = true;
+        function reverse_a_number(num) {
+            return num.split("").reverse().join("");
         }
     </script>
 
